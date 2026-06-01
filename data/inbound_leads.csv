@@ -1,0 +1,26 @@
+source_claim_id,publisher,first_name,last_name,phone,email,state,accident_state,incident_date,role,injuries,lead_type,test_lead
+RAV-1001,publisher_charlie,Casey,Foster,5553386115,user1001@example.com,CA,NY,2026-01-18,pedestrian,whiplash,accident_case,false
+RAV-1002,publisher_charlie,Harper,Carter,5554253597,user1002@example.com,NV,NV,2026-01-26,passenger,broken arm,accident_case,false
+RAV-1003,publisher_alpha,Rowan,Ward,5559193650,user1003@example.com,NY,TX,2026-01-31,pedestrian,neck and back pain,accident_case,false
+RAV-1004,publisher_charlie,Morgan,Reyes,5556583045,user1004@example.com,NC,CA,2025-12-09,passenger,soft tissue,accident_case,false
+RAV-1005,publisher_alpha,Harper,Patel,5557771138,user1005@example.com,AZ,GA,2025-12-26,passenger,broken arm,accident_case,false
+RAV-1006,publisher_charlie,Casey,Nguyen,5554462468,user1006@example.com,CA,NC,2026-05-05,driver,broken arm,accident_case,false
+RAV-1007,publisher_charlie,Riley,Carter,5555899400,user1007@example.com,NC,NV,2026-05-09,passenger,broken arm,accident_case,false
+RAV-1008,publisher_charlie,Rowan,Nguyen,5551130681,user1008@example.com,FL,CA,2026-03-05,passenger,soft tissue,accident_case,false
+RAV-1009,publisher_bravo,Morgan,Bennett,5558032589,user1009@example.com,NY,FL,2026-05-20,driver,broken arm,accident_case,false
+RAV-1010,publisher_alpha,Emerson,Ward,5555211719,user1010@example.com,OH,NY,2026-03-18,pedestrian,soft tissue,accident_case,false
+RAV-1011,publisher_alpha,Casey,Carter,5558102788,user1011@example.com,AZ,GA,2026-05-16,pedestrian,broken arm,accident_case,false
+RAV-1012,publisher_charlie,Morgan,Nguyen,5559859451,user1012@example.com,FL,NV,2026-01-30,pedestrian,whiplash,accident_case,false
+RAV-1013,publisher_charlie,Quinn,Bennett,5550000001,dnc1@example.com,GA,AZ,2026-03-25,passenger,neck and back pain,accident_case,false
+RAV-1014,publisher_alpha,Morgan,Flores,5550000002,dnc2@example.com,TX,OH,2026-03-19,passenger,soft tissue,accident_case,false
+RAV-1015,publisher_charlie,Riley,Patel,5551044558,"",CA,FL,2026-03-13,pedestrian,soft tissue,accident_case,false
+RAV-1016,publisher_bravo,Devon,Brooks,"",user1016@example.com,TX,CA,2026-01-20,passenger,whiplash,accident_case,false
+RAV-1017,publisher_alpha,Emerson,Reyes,(555) 123-99,shortphone@example.com,NV,OH,2026-05-01,passenger,neck and back pain,accident_case,false
+RAV-1018,publisher_bravo,Rowan,Ward,+1 (555) 314-2271,formatted@example.com,GA,TX,2026-01-26,driver,whiplash,accident_case,false
+RAV-1001,publisher_charlie,Casey,Foster,5553386115,dupe@example.com,CA,NY,2026-01-18,pedestrian,whiplash,accident_case,false
+RAV-1019,publisher_charlie,Reese,Hughes,5554945651,nocoverage@example.com,WY,WY,2026-02-25,passenger,broken arm,accident_case,false
+RAV-1020,publisher_charlie,Harper,Patel,5557347996,stale@example.com,FL,TX,2025-01-17,pedestrian,neck and back pain,accident_case,false
+RAV-1021,publisher_bravo,Morgan,Mitchell,5559919808,atfault@example.com,CA,NV,2026-04-05,driver,broken arm,accident_case,false
+RAV-1022,publisher_charlie,Casey,Bennett,5552122038,hasattorney@example.com,FL,NV,2026-05-20,passenger,whiplash,accident_case,false
+RAV-1023,publisher_charlie,Harper,Nguyen,5554553147,qa+test@example.com,NV,OH,2026-03-07,pedestrian,whiplash,accident_case,true
+RAV-BROKEN-1,publisher_alpha,Only,,,,,,,,,,

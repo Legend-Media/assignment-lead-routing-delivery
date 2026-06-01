@@ -1,0 +1,10 @@
+# This repo is the assignment scaffold. Candidates build their Rails app alongside
+# these files (or in a subdirectory). Common ignores:
+*.log
+*.sqlite3
+*.sqlite3-*
+/tmp/
+.env
+.DS_Store
+node_modules/
+/coverage/
