@@ -8,6 +8,38 @@ with **no real third-party accounts or credentials required**.
 We're far more interested in your **engineering judgment** than in how many features
 you cram in. A smaller, clean, well-reasoned solution beats a large, sprawling one.
 
+> **Start here:** **Fork this repository**, build your Rails app inside your fork,
+> and submit a link to it (or a zip with git history). This repo is a **self-contained
+> sandbox** — you can have the full environment running locally in under a minute with
+> the commands in [Quick start](#quick-start-instant-sandbox) below. No external
+> services, API keys, or accounts are needed.
+
+---
+
+## Quick start (instant sandbox)
+
+The whole downstream environment is a single dependency-free Ruby process. From your
+fork:
+
+```bash
+# 1. Start the mock recipients + DNC + postback server (stdlib only, no gems).
+#    Point its postbacks at the endpoint your Rails app will expose.
+CALLBACK_URL=http://localhost:3000/postbacks/recipients ruby mock_recipients/server.rb
+
+# 2. In another terminal, confirm it's live:
+curl http://localhost:3100/health
+# => {"status":"ok","recipients":["apex","beacon","citadel"], ...}
+
+# 3. Build your Rails app in this fork, then (your command) ingest the sample leads:
+#    e.g.  bin/rails leads:ingest FILE=data/inbound_leads.json
+#    and watch them flow: validate → scrub → qualify → route → dispatch → postback.
+```
+
+That's the entire sandbox — three differently-shaped recipient APIs, a DNC suppression
+endpoint, and asynchronous conversion postbacks, all served locally. See
+[`mock_recipients/README.md`](mock_recipients/README.md) and
+[`docs/RECIPIENT_APIS.md`](docs/RECIPIENT_APIS.md) for the contracts.
+
 ---
 
 ## What you're building
@@ -31,11 +63,16 @@ lifecycle/stages, the qualification rules, and the routing rules. Then read
 
 This assignment is designed to exercise five areas. Keep them in mind as you build:
 
-1. **Tracking leads through CRM stages** — an explicit, auditable lead lifecycle/state model.
+1. **Tracking leads through CRM stages** — an explicit, auditable lead lifecycle/state
+   model, **surfaced in an operator-facing CRM interface** (see requirement 8). We want
+   to see how you model *and present* the flow.
 2. **Third-party system integrations** — three recipients with different transports, auth, and success semantics.
 3. **Cross-platform integration workflows** — ingest from publishers, deliver to recipients, and process asynchronous postbacks (a full bidirectional flow), all idempotently.
 4. **Architectural decision-making** — how you structure the integration layer, the routing engine, and the state model; documented in `ARCHITECTURE.md`.
 5. **Maintainability, extensibility, robustness, and DRY** — adding a new recipient should be a small, isolated change; the system should not fall over on bad data, transient errors, or duplicate events.
+
+Because this is a **full-stack CRM** role, how cleanly an operator can *see and act on*
+the lead flow matters as much as the backend that drives it.
 
 ---
 
@@ -47,6 +84,9 @@ This assignment is designed to exercise five areas. Keep them in mind as you bui
 - **Background processing** is encouraged (ActiveJob with any adapter, including
   `:async`/inline) since dispatch and postbacks are naturally asynchronous.
 - **Tests with RSpec** (or Minitest) covering the parts that matter most.
+- **CRM/admin UI:** ActiveAdmin recommended (our stack), but any Rails-ecosystem option
+  is acceptable (Avo, Administrate, Trestle, Madmin, or plain Rails + Hotwire). See
+  requirement 8.
 - The mock server is plain Ruby — you don't need to modify it, just integrate against it.
 
 ### Functional — must have
@@ -72,15 +112,25 @@ This assignment is designed to exercise five areas. Keep them in mind as you bui
 7. **Receive postbacks** at a `CALLBACK_URL` endpoint, match by `source_claim_id`,
    move the lead to its final stage, and record a **conversion**. Duplicate postbacks
    (~25% arrive twice) must be **idempotent**.
-8. **Query the lifecycle** — be able to show, for any lead, its current stage and how
-   it got there (and ideally a simple list/summary by stage).
+8. **CRM / operator interface** — a working UI an operator could actually use to run
+   the desk, not just a database dump. At minimum it should let someone:
+   - browse and filter leads **by stage** (and by recipient / publisher / state),
+   - open a single lead and see its **full lifecycle** — every stage transition with
+     reasons, each dispatch attempt (recipient, what was sent, what came back), and any
+     conversion/postback,
+   - get an at-a-glance **summary** (counts by stage, delivery outcome per recipient).
+
+   How you design this flow is part of what we're assessing. **We use and recommend
+   [ActiveAdmin](https://activeadmin.info/)** (it's our stack), so it's the path of least
+   resistance — but you're free to use **anything the Rails ecosystem supports**: Avo,
+   Administrate, Trestle, Madmin, or hand-rolled Rails views with Hotwire/Turbo. Pick what
+   lets you present the CRM flow most clearly and justify the choice in `ARCHITECTURE.md`.
 
 ### Nice to have (bonus, not required)
-- A minimal UI (even ActiveAdmin or a couple of plain views) to browse leads by stage —
-  a small full-stack signal.
+- Operator **actions** from the UI (e.g. re-dispatch a failed lead, requeue, mark reviewed).
 - Verifying the postback `signature`.
-- A summary/report (counts by stage, delivery success rate per recipient, conversion rate).
 - CSV ingest (`data/inbound_leads.csv`) in addition to JSON.
+- Delivery/conversion **rates** over time, not just counts.
 
 > Don't sacrifice the must-haves or code quality to chase bonuses. We'd rather see
 > the core done well.
@@ -89,13 +139,8 @@ This assignment is designed to exercise five areas. Keep them in mind as you bui
 
 ## The environment
 
-Start the mock recipients server (no gems needed):
-
-```bash
-# point postbacks at your running app:
-CALLBACK_URL=http://localhost:3000/postbacks/recipients ruby mock_recipients/server.rb
-curl http://localhost:3100/health
-```
+The sandbox is the mock server from [Quick start](#quick-start-instant-sandbox) above.
+Reference material:
 
 - Recipients, DNC, and postback contracts: [`docs/RECIPIENT_APIS.md`](docs/RECIPIENT_APIS.md)
 - Mock server details: [`mock_recipients/README.md`](mock_recipients/README.md)
@@ -111,18 +156,19 @@ Your pipeline should handle all of them gracefully.
 
 ## Deliverables
 
-1. Your Rails application, committed to a **Git repo** (a private GitHub repo you share
-   with us, or a zipped repo with `.git` history — please keep meaningful commits).
-2. A **`README.md`** for your app: how to set up, run, ingest, and test it, in order.
+1. Your Rails application, built **inside your fork of this repo** and shared as a link
+   (or a zip with `.git` history). Please keep meaningful, incremental commits.
+2. A **`README.md`** for your app: how to set up, run, ingest, open the CRM UI, and test
+   it, in order.
 3. **`ARCHITECTURE.md`** — use [`docs/ARCHITECTURE_NOTES_TEMPLATE.md`](docs/ARCHITECTURE_NOTES_TEMPLATE.md)
    as a starting point. This is where you explain the integration abstraction, the
-   state model, your routing approach, robustness decisions, and where "Delta Direct"
-   (the extensibility checkpoint) would plug in.
+   state model, your CRM/UI choice, your routing approach, robustness decisions, and
+   where "Delta Direct" (the extensibility checkpoint) would plug in.
 4. **Tests** that run with a single documented command.
 
-A reviewer should be able to clone your repo, follow your README, start the mock
-server, ingest the sample data, and watch leads flow through to delivery and
-conversion.
+A reviewer should be able to clone your fork, follow your README, start the mock
+server, ingest the sample data, browse the leads through your CRM interface, and watch
+them flow through to delivery and conversion.
 
 ---
 

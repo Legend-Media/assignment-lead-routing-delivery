@@ -20,6 +20,11 @@ A few sentences on how the pieces fit together (ingest → validate → scrub �
 - How are routing rules expressed? How would a non-engineer change a recipient's
   accepted states or cap?
 
+## 4b. CRM / operator interface
+- Which UI approach did you choose (ActiveAdmin / Avo / Administrate / plain Rails / …) and why?
+- How does an operator move through the flow: find leads by stage, inspect one lead's
+  full history (transitions, dispatches, postbacks), and read the summary?
+
 ## 5. Robustness
 - Timeouts, retries/backoff, and which errors you retry vs. surface.
 - Duplicate postbacks, partial dispatch failures, malformed inbound records.
