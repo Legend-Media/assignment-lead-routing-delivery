@@ -87,7 +87,7 @@ the lead flow matters as much as the backend that drives it.
 - **CRM/admin UI:** ActiveAdmin recommended (our stack), but any Rails-ecosystem option
   is acceptable (Avo, Administrate, Trestle, Madmin, or plain Rails + Hotwire). See
   requirement 8.
-- The mock server is plain Ruby — you don't need to modify it, just integrate against it.
+- The mock server is plain Ruby, you don't need to modify it, just integrate against it.
 
 ### Functional — must have
 1. **Ingest** leads from `data/inbound_leads.json` (a rake task, seeder, or endpoint —
@@ -122,7 +122,7 @@ the lead flow matters as much as the backend that drives it.
 
    How you design this flow is part of what we're assessing. **We use and recommend
    [ActiveAdmin](https://activeadmin.info/)** (it's our stack), so it's the path of least
-   resistance — but you're free to use **anything the Rails ecosystem supports**: Avo,
+   resistance, but you're free to use **anything the Rails ecosystem supports**: Avo,
    Administrate, Trestle, Madmin, or hand-rolled Rails views with Hotwire/Turbo. Pick what
    lets you present the CRM flow most clearly and justify the choice in `ARCHITECTURE.md`.
 
@@ -177,12 +177,11 @@ them flow through to delivery and conversion.
 - **Scope:** designed for roughly **4 days** of focused work. If you find yourself
   going well beyond that, stop and write down in `ARCHITECTURE.md` what you'd do next
   — knowing where to stop is part of the signal.
-- This is a **paid** assignment; payment details are in your offer email.
 - **Using AI assistants is allowed.** We use them too. We care that you understand,
   can defend, and would maintain every line you submit. A short note on how you used
   them (in `ARCHITECTURE.md`) is welcome but optional.
 - **Questions are welcome.** If anything is ambiguous, make a reasonable assumption,
-  write it down in `ARCHITECTURE.md`, and keep going — or reach out. Reasonable
+  write it down in `ARCHITECTURE.md`, and keep going or reach out. Reasonable
   assumptions never count against you.
 
 We're looking forward to seeing how you think. Good luck!
